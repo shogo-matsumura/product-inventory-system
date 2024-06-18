@@ -16,6 +16,9 @@ public class Manager {
     @Column(name = "manager_id")
     private Integer id;
 
+    @Column(name = "store_id", nullable = false)
+    private Integer storeId;
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
@@ -29,6 +32,14 @@ public class Manager {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
     }
 
     public String getEmail() {

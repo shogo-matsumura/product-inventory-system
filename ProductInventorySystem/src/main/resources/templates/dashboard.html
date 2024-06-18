@@ -1,23 +1,13 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>管理者トップ</title>
+    <title>Dashboard</title>
 </head>
 <body>
-    <h1>管理者トップ</h1>
-    <nav>
-        <ul>
-            <li><a href="/stores">店舗管理</a></li>
-            <li><a href="/managers">管理者管理</a></li>
-            <li><a href="/profile">管理者プロフィール</a></li>
-            <li><a href="/products">商品管理</a></li>
-            <li><a href="/orders">商品発注履歴管理</a></li>
-            <li><a href="/manufacturers">メーカ管理</a></li>
-            <li><a href="/categories">カテゴリ管理</a></li>
-        </ul>
-    </nav>
-    <form action="/logout" method="post">
+    <h1>Welcome to the Dashboard</h1>
+    <p>Store ID: <span th:text="${storeId}"></span></p>
+    <a th:href="@{/dashboard/{storeId}(storeId=${storeId})}">店舗管理</a>
+    <form th:action="@{/logout}" method="post">
         <button type="submit">ログアウト</button>
     </form>
 </body>

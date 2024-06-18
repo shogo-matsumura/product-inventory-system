@@ -22,9 +22,4 @@ public class LoginController {
         }
         return "redirect:/login";
     }
-    
-    @GetMapping("/dashboard")
-    public String dashboard() {
-        return "dashboard";
-    }
 }

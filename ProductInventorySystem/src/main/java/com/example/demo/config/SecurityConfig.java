@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-//必要なクラスやインターフェースをインポートします
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,39 +7,39 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@Configuration // このクラスは設定クラスであることを示します
-@EnableWebSecurity // Webセキュリティを有効にすることを示します
-public class SecurityConfig { // セキュリティ設定のクラス
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
 
- @Bean // このメソッドの返り値をSpringのBeanとして登録します
- public PasswordEncoder passwordEncoder() { // パスワードエンコーダー（パスワードのハッシュ化）を提供するメソッド
-     return new BCryptPasswordEncoder(); // パスワードをBCrypt方式でハッシュ化するエンコーダーを返します
- }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
- @Bean // このメソッドの返り値をSpringのBeanとして登録します
- public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { // セキュリティフィルタチェーンを定義するメソッド
-     HttpSecurity logout2 = http
-         .authorizeRequests(authorizeRequests ->  // 認証リクエストを設定します
-             authorizeRequests
-                 .requestMatchers("/login", "/register").permitAll() // "/login"と"/register"へのリクエストは認証なしで許可します
-                 .anyRequest().authenticated() // それ以外の全てのリクエストは認証が必要です
-         )
-         .formLogin(formLogin ->  // フォームベースのログインを設定します
-             formLogin
-                 .loginPage("/login") // ログインページのURLを設定します
-                 .permitAll() // ログインページは認証なしで許可します
-         )
-         .logout(logout ->  // ログアウトを設定します
-             logout
-                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // ログアウトのリクエストURLを設定します
-         );
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+        .csrf().and() // CSRF保護を有効にする（元々は無効化されていた）
+        .authorizeHttpRequests(authorizeRequests ->
+            authorizeRequests
+                .requestMatchers("/login", "/register").permitAll()
+                .requestMatchers("/api/**").permitAll()
+                .anyRequest().authenticated()
+        )
+        .formLogin(formLogin ->
+            formLogin
+                .loginPage("/login")
+                .defaultSuccessUrl("/dashboard", true)
+                .permitAll()
+        )
+        .logout(logout ->
+            logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/logout-success") // ログアウト成功時にリダイレクトするURLを /login から /logout-success に変更
+                .permitAll()
+        );
 
-     return http.build(); // 上記の設定を反映してHttpSecurityオブジェクトをビルドします
- }
-
- // 他のセキュリティ設定が必要な場合は、ここに追加します
+    return http.build();
 }
-
-
+}
