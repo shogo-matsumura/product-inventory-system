@@ -20,7 +20,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-        .csrf().and() // CSRF保護を有効にする（元々は無効化されていた）
+        .csrf().and() 
         .authorizeHttpRequests(authorizeRequests ->
             authorizeRequests
                 .requestMatchers("/login", "/register").permitAll()

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>サブカテゴリ詳細</title>
+</head>
+<body>
+    <h1 style="font-size: 24px;">サブカテゴリ詳細</h1>
+    <div>
+        <h2 style="font-size: 20px;" th:text="${subcategory.subcategoryName}"></h2>
+        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; font-size: 16px;">
+            <tr style="background-color: #f2f2f2;">
+                <th>スモールカテゴリID</th>
+                <th>スモールカテゴリ名</th>
+            </tr>
+            <tr th:each="smallCategory : ${smallCategories}">
+                <td th:text="${smallCategory.smallCategoryId}"></td>
+                <td th:text="${smallCategory.smallCategoryName}"></td>
+            </tr>
+        </table>
+    </div>
+    <a th:href="@{/category-management}">カテゴリ管理に戻る</a>
+</body>
+</html>
