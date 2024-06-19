@@ -15,7 +15,7 @@ public class ManagerController {
     private ManagerRepository managerRepository;
 
     @GetMapping("/api/managers/{manager_id}")
-    public Manager getManagerById(@PathVariable("manager_id") Integer id) { // 引数をIntegerに変更
+    public Manager getManagerById(@PathVariable("manager_id") Integer id) { 
         return managerRepository.findById(id).orElse(null);
     }
 }

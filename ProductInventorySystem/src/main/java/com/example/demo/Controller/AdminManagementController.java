@@ -20,7 +20,6 @@ import com.example.demo.repository.ManagerRepository;
 import com.example.demo.repository.PermissionRepository;
 import com.example.demo.repository.PositionRepository;
 import com.example.demo.repository.StoreRepository;
-
 @Controller
 public class AdminManagementController {
 
@@ -96,6 +95,15 @@ public class AdminManagementController {
 
     @GetMapping("/admin-management/edit/{id}")
     public String editManagerForm(@PathVariable("id") Integer id, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Manager loggedInManager = managerRepository.findByEmail(email);
+
+        if (loggedInManager.getPermissionId() != 1) {
+            model.addAttribute("error", "権限がありません。");
+            return "access-denied";
+        }
+
         Manager manager = managerRepository.findById(id).orElse(null);
         if (manager != null) {
             model.addAttribute("manager", manager);
@@ -104,7 +112,16 @@ public class AdminManagementController {
     }
 
     @PostMapping("/admin-management/edit")
-    public String updateManager(Manager updatedManager) {
+    public String updateManager(Manager updatedManager, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Manager loggedInManager = managerRepository.findByEmail(email);
+
+        if (loggedInManager.getPermissionId() != 1) {
+            model.addAttribute("error", "権限がありません。");
+            return "access-denied";
+        }
+
         Manager manager = managerRepository.findById(updatedManager.getId()).orElse(null);
         if (manager != null) {
             manager.setFirstName(updatedManager.getFirstName());

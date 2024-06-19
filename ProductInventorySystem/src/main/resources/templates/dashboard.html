@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dashboard</title>
@@ -10,6 +9,7 @@
     <a th:href="@{/profile}">管理者プロフィール</a>
     <a th:href="@{/admin-management}">管理者管理</a>
     <a th:href="@{/category-management}">カテゴリ管理</a>
+    <a th:href="@{/manufacturer-management}">メーカ管理</a>
     <form th:action="@{/logout}" method="post">
         <button type="submit">ログアウト</button>
     </form>

@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-//必要なツールをインポートしています
 import java.util.Collection;
 import java.util.Collections;
 
@@ -8,10 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-//Userクラスを使うためにインポートしています
+//Userクラスを使うためにインポート
 import com.example.demo.entity.Manager;
 
-//UserDetailsインターフェースを実装したManagerServiceというクラスを作成します。これはSpring Securityでユーザー情報を扱うためのクラスです。
 public class ManagerService implements UserDetails {
 	 private  Manager manager;
 
