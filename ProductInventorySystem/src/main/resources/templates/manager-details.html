@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>管理者詳細</title>
+</head>
+<body>
+    <h1>管理者詳細</h1>
+    <div>
+        <p>姓: <span th:text="${manager.lastName}"></span></p>
+        <p>名: <span th:text="${manager.firstName}"></span></p>
+        <p>メール: <span th:text="${manager.email}"></span></p>
+        <p>電話番号: <span th:text="${manager.phoneNumber}"></span></p>
+    </div>
+    <a th:href="@{/admin-management}">管理者管理に戻る</a>
+    <a th:href="@{/admin-management/edit/{id}(id=${manager.id})}">編集</a>
+    <form th:action="@{/admin-management/delete/{id}(id=${manager.id})}" method="post" onsubmit="return confirmDelete()">
+        <button type="submit">削除</button>
+    </form>
+
+    <script>
+        function confirmDelete() {
+            return confirm("本当に削除しますか？"); //フールプルーフ機能
+        }
+    </script>
+</body>
+</html>

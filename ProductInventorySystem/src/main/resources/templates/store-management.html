@@ -4,12 +4,15 @@
     <title>Store Management</title>
 </head>
 <body>
-    <h1>店舗管理画面</h1>
+    <h1>店舗詳細</h1>
     <div>
         <p>店舗名: <span id="storeName" th:text="${storeName}"></span></p>
         <p>住所: <span id="address" th:text="${address}"></span></p>
     </div>
     <div>
+        <a th:href="@{/dashboard/edit/{storeId}(storeId=${storeId})}">編集</a>
+    </div>
+       <div>
         <a th:href="@{/dashboard}">ダッシュボードに戻る</a>
     </div>
 </body>

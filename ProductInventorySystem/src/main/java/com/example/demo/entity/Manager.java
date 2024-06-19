@@ -25,6 +25,21 @@ public class Manager {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "permission_id", nullable = false)
+    private Integer permissionId;
+
+    @Column(name = "position_id", nullable = false)
+    private Integer positionId;
+
     // getter and setter
     public Integer getId() {
         return id;
@@ -56,5 +71,45 @@ public class Manager {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Integer getPermissionId() {
+        return permissionId;
+    }
+
+    public void setPermissionId(Integer permissionId) {
+        this.permissionId = permissionId;
+    }
+
+    public Integer getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(Integer positionId) {
+        this.positionId = positionId;
     }
 }

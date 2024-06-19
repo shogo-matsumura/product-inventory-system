@@ -36,7 +36,7 @@ public class SecurityConfig {
         .logout(logout ->
             logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/logout-success") // ログアウト成功時にリダイレクトするURLを /login から /logout-success に変更
+                .logoutSuccessUrl("/logout-success") // ログアウト成功時にリダイレクトするURLをlogout-success
                 .permitAll()
         );
 

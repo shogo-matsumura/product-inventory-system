@@ -1,0 +1,32 @@
+<!-- profile.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>管理者プロフィール</title>
+</head>
+<body>
+    <h1>管理者プロフィール</h1>
+    <form th:action="@{/profile}" th:object="${manager}" method="post">
+        <div>
+            <label>姓:</label>
+            <input type="text" th:field="*{lastName}" readonly />
+        </div>
+        <div>
+            <label>名:</label>
+            <input type="text" th:field="*{firstName}" readonly />
+        </div>
+        <div>
+            <label>メール:</label>
+            <input type="text" th:field="*{email}" readonly />
+        </div>
+        <div>
+            <label>電話番号:</label>
+            <input type="text" th:field="*{phoneNumber}" readonly />
+        </div>
+        <div>
+            <a th:href="@{/profile/edit}">編集</a>
+            <a th:href="@{/dashboard}">ダッシュボードへ戻る</a>
+        </div>
+    </form>
+</body>
+</html>

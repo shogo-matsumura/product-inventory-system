@@ -1,12 +1,15 @@
+<!-- dashboard.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Welcome to the Dashboard</h1>
+    <h1>管理者トップ</h1>
     <p>Store ID: <span th:text="${storeId}"></span></p>
     <a th:href="@{/dashboard/{storeId}(storeId=${storeId})}">店舗管理</a>
+    <a th:href="@{/profile}">管理者プロフィール</a>
+    <a th:href="@{/admin-management}">管理者管理</a>
     <form th:action="@{/logout}" method="post">
         <button type="submit">ログアウト</button>
     </form>
