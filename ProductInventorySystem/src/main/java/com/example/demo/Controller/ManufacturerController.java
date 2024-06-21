@@ -18,7 +18,8 @@ public class ManufacturerController {
 
     @Autowired
     private ManufacturerService manufacturerService;
-
+    
+    //以下リダイレクト先（権限によってアクセス制限）
     @GetMapping("/manufacturer-management")
     public String showManufacturerManagement(Model model) {
         model.addAttribute("manufacturers", manufacturerService.getAllManufacturers());
@@ -31,7 +32,7 @@ public class ManufacturerController {
         String email = authentication.getName();
 
         if (!manufacturerService.hasPermission(email, 1)) {
-            model.addAttribute("error", "権限がありません。");
+            model.addAttribute("error", "権限がありません。");//アクセス制限ページリダイレクト
             return "access-denied";
         }
 
@@ -46,7 +47,7 @@ public class ManufacturerController {
         String email = authentication.getName();
 
         if (!manufacturerService.hasPermission(email, 1)) {
-            model.addAttribute("error", "権限がありません。");
+            model.addAttribute("error", "権限がありません。");//アクセス制限ページリダイレクト
             return "access-denied";
         }
         return "manufacturer-create";
@@ -58,7 +59,7 @@ public class ManufacturerController {
         String email = authentication.getName();
 
         if (!manufacturerService.hasPermission(email, 1)) {
-            model.addAttribute("error", "権限がありません。");
+            model.addAttribute("error", "権限がありません。");//アクセス制限ページリダイレクト
             return "access-denied";
         }
         manufacturerService.createManufacturer(manufacturerName);
@@ -73,7 +74,7 @@ public class ManufacturerController {
 
         if (!manufacturerService.hasPermission(email, 1)) {
             model.addAttribute("error", "権限がありません。");
-            return "access-denied";
+            return "access-denied";//アクセス制限ページリダイレクト
         }
 
         manufacturerService.updateManufacturer(manufacturerId, manufacturerName);
@@ -87,7 +88,7 @@ public class ManufacturerController {
 
         if (!manufacturerService.hasPermission(email, 1)) {
             model.addAttribute("error", "権限がありません。");
-            return "access-denied";
+            return "access-denied";//アクセス制限ページリダイレクト
         }
         manufacturerService.deleteManufacturer(manufacturerId);
         return "redirect:/manufacturer-management";

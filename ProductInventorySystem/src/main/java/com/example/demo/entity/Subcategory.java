@@ -2,6 +2,9 @@ package com.example.demo.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,6 +19,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "subcategories")
 public class Subcategory {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subcategory_id")
@@ -26,9 +30,11 @@ public class Subcategory {
 
     @ManyToOne
     @JoinColumn(name = "large_category_id", nullable = false)
+    @JsonBackReference
     private LargeCategory largeCategory;
 
     @OneToMany(mappedBy = "subcategory", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<SmallCategory> smallCategories;
 
     // Getters and setters

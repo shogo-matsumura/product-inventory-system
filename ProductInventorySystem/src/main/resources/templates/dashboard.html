@@ -1,17 +1,43 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dashboard</title>
+
 </head>
 <body>
     <h1>管理者トップ</h1>
     <p>Store ID: <span th:text="${storeId}"></span></p>
-    <a th:href="@{/dashboard/{storeId}(storeId=${storeId})}">店舗管理</a>
-    <a th:href="@{/profile}">管理者プロフィール</a>
-    <a th:href="@{/admin-management}">管理者管理</a>
-    <a th:href="@{/category-management}">カテゴリ管理</a>
-    <a th:href="@{/manufacturer-management}">メーカ管理</a>
-    <form th:action="@{/logout}" method="post">
-        <button type="submit">ログアウト</button>
-    </form>
+    <table>
+        <tbody>
+            <tr>
+                <td><a th:href="@{/dashboard/{storeId}(storeId=${storeId})}">店舗管理</a></td>
+            </tr>
+            <tr>
+                <td><a th:href="@{/profile}">管理者プロフィール</a></td>
+            </tr>
+            <tr>
+                <td><a th:href="@{/admin-management}">管理者管理</a></td>
+            </tr>
+            <tr>
+                <td><a th:href="@{/category-management}">カテゴリ管理</a></td>
+            </tr>
+            <tr>
+                <td><a th:href="@{/manufacturer-management}">メーカ管理</a></td>
+            </tr>
+            <tr>
+                <td><a th:href="@{/products}">商品管理</a></td>
+            </tr>
+            <tr>
+                <td><a th:href="@{/order-history}">商品発注管理</a></td>
+            </tr>
+            <tr>
+                <td>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit">ログアウト</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

@@ -15,7 +15,7 @@ public class StoreController {
 
     @Autowired
     private StoreRepository storeRepository;
-
+    //storeIdの情報を反映
     @GetMapping("/dashboard/{storeId}")
     public String storeManagement(@PathVariable("storeId") Integer storeId, Model model) {
         Store store = storeRepository.findByStoreId(storeId);
@@ -49,7 +49,7 @@ public class StoreController {
             store.setAddress(updatedStore.getAddress());
             storeRepository.save(store);
         }
-
+        //@PathVariable("storeId") Integer storeId でキャプチャされた storeId を利用してStoreIDごとの//ダッシュボード画面に遷移する。
         return "redirect:/dashboard/" + storeId;
     }
 }

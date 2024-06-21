@@ -25,10 +25,9 @@ public class SubcategoryController {
     @GetMapping("/subcategory/details/{id}")
     public String viewSubcategoryDetails(@PathVariable("id") Integer id, Model model) {
         Subcategory subcategory = subcategoryRepository.findById(id).orElse(null);
-        List<SmallCategory> smallCategories = smallCategoryRepository.findBySubcategory_SubcategoryId(id);
+        List<SmallCategory> smallCategories = smallCategoryRepository.findBySubcategory_SubcategoryId(id); // メソッド名を修正
         model.addAttribute("subcategory", subcategory);
         model.addAttribute("smallCategories", smallCategories);
         return "subcategory-details";
     }
 }
-

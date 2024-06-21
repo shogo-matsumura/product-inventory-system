@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "small_categories")
 public class SmallCategory {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "small_category_id")
@@ -22,7 +25,13 @@ public class SmallCategory {
 
     @ManyToOne
     @JoinColumn(name = "subcategory_id", nullable = false)
+    @JsonBackReference
     private Subcategory subcategory;
+
+    @ManyToOne
+    @JoinColumn(name = "large_category_id", nullable = false) 
+    @JsonBackReference
+    private LargeCategory largeCategory;
 
     // Getters and setters
     public Integer getSmallCategoryId() {
@@ -47,5 +56,13 @@ public class SmallCategory {
 
     public void setSubcategory(Subcategory subcategory) {
         this.subcategory = subcategory;
+    }
+
+    public LargeCategory getLargeCategory() {
+        return largeCategory;
+    }
+
+    public void setLargeCategory(LargeCategory largeCategory) {
+        this.largeCategory = largeCategory;
     }
 }

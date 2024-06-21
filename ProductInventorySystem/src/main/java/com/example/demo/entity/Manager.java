@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
+//storeidも保持　当該IDの所属店舗権限、役職氏名、電話番号、メールアドレス保持　
 @Entity
 @Table(name = "managers")
 public class Manager {

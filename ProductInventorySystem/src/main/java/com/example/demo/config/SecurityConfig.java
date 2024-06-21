@@ -20,11 +20,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-        .csrf().and() 
+        .csrf().and()  
         .authorizeHttpRequests(authorizeRequests ->
             authorizeRequests
                 .requestMatchers("/login", "/register").permitAll()
-                .requestMatchers("/api/**").permitAll()
+                .requestMatchers("/api/**").authenticated()  // /api/** エンドポイントに認証を要求。
                 .anyRequest().authenticated()
         )
         .formLogin(formLogin ->
@@ -36,7 +36,7 @@ public class SecurityConfig {
         .logout(logout ->
             logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/logout-success") // ログアウト成功時にリダイレクトするURLをlogout-success
+                .logoutSuccessUrl("/logout-success")
                 .permitAll()
         );
 

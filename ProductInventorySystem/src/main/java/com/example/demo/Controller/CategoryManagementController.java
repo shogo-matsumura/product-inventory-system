@@ -42,5 +42,3 @@ public class CategoryManagementController {
         return "category-details";
     }
 }
-
-
