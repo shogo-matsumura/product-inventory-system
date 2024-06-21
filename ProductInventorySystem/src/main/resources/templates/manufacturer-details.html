@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>メーカー詳細</title>
+</head>
+
+<body>
+	<h1>メーカー詳細</h1>
+	<form th:action="@{/manufacturer/update}" method="post">
+		<input type="hidden" name="manufacturerId" th:value="${manufacturer.manufacturerId}" />
+		<div>
+			<label>メーカー名:</label>
+			<input type="text" name="manufacturerName" th:value="${manufacturer.manufacturerName}" />
+		</div>
+		<button type="submit">更新</button>
+	</form>
+	<form th:action="@{/manufacturer/delete}" method="post" onsubmit="return confirmDeletion()">
+		<input type="hidden" name="manufacturerId" th:value="${manufacturer.manufacturerId}" />
+		<button type="submit">削除</button>
+	</form>
+	<script>
+		function confirmDeletion() {
+			return confirm('本当に削除しますか？'); //フールプルーフ機能
+		}
+	</script>
+	<a th:href="@{/manufacturer-management}">メーカー管理に戻る</a>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>新規メーカー作成</title>
+</head>
+<body>
+    <h1>新規メーカー作成</h1>
+    <form th:action="@{/manufacturer/create}" method="post">
+        <label for="manufacturerName">メーカー名:</label>
+        <input type="text" id="manufacturerName" name="manufacturerName" required>
+        <button type="submit">作成</button>
+    </form>
+    <a th:href="@{/manufacturer-management}">メーカー管理に戻る</a>
+</body>
+</html>
