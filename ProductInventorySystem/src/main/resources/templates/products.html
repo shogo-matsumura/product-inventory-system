@@ -1,68 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>商品管理</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <meta name="_csrf" th:content="${_csrf.token}" />
-    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	<title>商品管理</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
+
 <body>
-    <h1>商品管理</h1>
-    <form id="searchForm">
-        <div>
-            <label for="largeCategory">大カテゴリ:</label>
-            <select id="largeCategory" name="largeCategory">
-                <option value="">--選択してください--</option>
-                <option th:each="category : ${categories}" th:value="${category.largeCategoryId}"
-                    th:text="${category.largeCategoryName}"></option>
-            </select>
-        </div>
-        <div>
-            <label for="subCategory">中カテゴリ:</label>
-            <select id="subCategory" name="subCategory">
-                <option value="">--選択してください--</option>
-            </select>
-        </div>
-        <div>
-            <label for="smallCategory">小カテゴリ:</label>
-            <select id="smallCategory" name="smallCategory">
-                <option value="">--選択してください--</option>
-            </select>
-        </div>
-        <div>
-            <label for="search">検索:</label>
-            <input type="text" id="search" name="search" placeholder="商品名を入力">
-        </div>
-        <button type="submit">検索</button>
-    </form>
-    <div id="searchResults"></div>
-    <div id="pagination">
-        <a href="#" id="prevPage">前のページ</a>
-        <span id="currentPage">1</span>/<span id="totalPages">1</span>
-        <a href="#" id="nextPage">次のページ</a>
-    </div>
-    <a th:href="@{/dashboard}">ダッシュボードに戻る</a>
+	<h1>商品管理</h1>
+	<form id="searchForm">
+		<div>
+			<label for="largeCategory">大カテゴリ:</label>
+			<select id="largeCategory" name="largeCategory">
+				<option value="">--選択してください--</option>
+				<option th:each="category : ${categories}" th:value="${category.largeCategoryId}"
+					th:text="${category.largeCategoryName}"></option>
+			</select>
+		</div>
+		<div>
+			<label for="subCategory">中カテゴリ:</label>
+			<select id="subCategory" name="subCategory">
+				<option value="">--選択してください--</option>
+			</select>
+		</div>
+		<div>
+			<label for="smallCategory">小カテゴリ:</label>
+			<select id="smallCategory" name="smallCategory">
+				<option value="">--選択してください--</option>
+			</select>
+		</div>
+		<div>
+			<label for="search">検索:</label>
+			<input type="text" id="search" name="search" placeholder="商品名を入力">
+		</div>
+		<button type="submit">検索</button>
+	</form>
+	<div id="searchResults"></div>
+	<div id="pagination">
+		<a href="#" id="prevPage">前のページ</a>
+		<span id="currentPage">1</span>/<span id="totalPages">1</span>
+		<a href="#" id="nextPage">次のページ</a>
+	</div>
+	<a th:href="@{/dashboard}">ダッシュボードに戻る</a>
 
-    <script>
-        $(document).ready(function () {
-            let csrfToken = $("meta[name='_csrf']").attr("content");
-            let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+	<script>
+		$(document).ready(function () {
+			let csrfToken = $("meta[name='_csrf']").attr("content");
+			let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
-            let currentPage = 1;
-            let totalPages = 1;
+			let currentPage = 1;
+			let totalPages = 1;
 
-            function fetchResults(page) {
-                const searchQuery = $('#search').val();
-                if (searchQuery) {
-                    $.ajax({
-                        url: '/api/products',
-                        type: 'GET',
-                        data: {productName: searchQuery, page: page, size: 3},
-                        success: function (data) {
-                            let results = '<ul>';
-                            const products = data.content || data;
-                            products.forEach(function (product) {
-                                results += `<li>
+			function fetchResults(page) {
+				const searchQuery = $('#search').val();
+				if (searchQuery) {
+					$.ajax({
+						url: '/api/products',
+						type: 'GET',
+						data: {productName: searchQuery, page: page, size: 3},
+						success: function (data) {
+							let results = '<ul>';
+							const products = data.content || data;
+							products.forEach(function (product) {
+
+								results += `<li>
                                     商品名: ${product.productName}
                                     店舗販売価格: ${product.sellingPrice} 円
                                     店舗在庫数: ${product.stockQuantity} 個
@@ -72,105 +75,106 @@
                                     </select>
                                     <button onclick="orderProduct(${product.productStoreId})">発注</button>
                                 </li>`;
-                            });
-                            results += '</ul>';
-                            $('#searchResults').html(results);
-                            currentPage = data.number + 1;
-                            totalPages = data.totalPages;
-                            $('#currentPage').text(currentPage);
-                            $('#totalPages').text(totalPages);
-                        }
-                    });
-                } else {
-                    $('#searchResults').html('');
-                }
-            }
+							});
+							results += '</ul>';
+							$('#searchResults').html(results);
+							currentPage = data.number + 1;
+							totalPages = data.totalPages;
+							$('#currentPage').text(currentPage);
+							$('#totalPages').text(totalPages);
+						}
+					});
+				} else {
+					$('#searchResults').html('');
+				}
+			}
 
-            $('#searchForm').on('submit', function (e) {
-                e.preventDefault();
-                currentPage = 1;
-                fetchResults(currentPage);
-            });
+			$('#searchForm').on('submit', function (e) {
+				e.preventDefault();
+				currentPage = 1;
+				fetchResults(currentPage);
+			});
 
-            $('#prevPage').on('click', function (e) {
-                e.preventDefault();
-                if (currentPage > 1) {
-                    currentPage--;
-                    fetchResults(currentPage);
-                }
-            });
+			$('#prevPage').on('click', function (e) {
+				e.preventDefault();
+				if (currentPage > 1) {
+					currentPage--;
+					fetchResults(currentPage);
+				}
+			});
 
-            $('#nextPage').on('click', function (e) {
-                e.preventDefault();
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    fetchResults(currentPage);
-                }
-            });
+			$('#nextPage').on('click', function (e) {
+				e.preventDefault();
+				if (currentPage < totalPages) {
+					currentPage++;
+					fetchResults(currentPage);
+				}
+			});
 
-            window.viewDetails = function (productStoreId) {
-                window.location.href = `/product/details/${productStoreId}`;
-            }
+			window.viewDetails = function (productStoreId) {
+				window.location.href = `/product/details/${productStoreId}`;
+			}
 
-            window.orderProduct = function (productStoreId) {
-                const quantity = $(`#orderQuantity${productStoreId}`).val();
-                $.ajax({
-                    url: '/api/order',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({productStoreId: productStoreId, quantity: quantity}),
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader(csrfHeader, csrfToken);
-                    },
-                    success: function (response) {
-                        alert('発注完了しました。発注履歴は管理者トップの「商品発注管理ページ」でご確認いただけます。');
-                        fetchResults(currentPage);
-                    },
-                    error: function (error) {
-                        alert('発注失敗しました。ページを再読み込みするか、担当者にご連絡ください。.');
-                    }
-                });
-            }
+			window.orderProduct = function (productStoreId) {
+				const quantity = $(`#orderQuantity${productStoreId}`).val();
+				$.ajax({
+					url: '/api/order',
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify({productStoreId: productStoreId, quantity: quantity}),
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader(csrfHeader, csrfToken);
+					},
+					success: function (response) {
+						alert('発注完了しました。発注履歴は管理者トップの「商品発注管理ページ」でご確認いただけます。');
+						fetchResults(currentPage);
+					},
+					error: function (error) {
+						alert('発注失敗しました。ページを再読み込みするか、担当者にご連絡ください。.');
+					}
+				});
+			}
 
-            $('#largeCategory').change(function () {
-                const largeCategoryId = $(this).val();
-                if (largeCategoryId) {
-                    $.ajax({
-                        url: `/subcategories/${largeCategoryId}`,
-                        type: 'GET',
-                        success: function (data) {
-                            let subCategoryOptions = '<option value="">--選択してください--</option>';
-                            data.forEach(function (subCategory) {
-                                subCategoryOptions += `<option value="${subCategory.subcategoryId}">${subCategory.subcategoryName}</option>`;
-                            });
-                            $('#subCategory').html(subCategoryOptions);
-                        }
-                    });
-                } else {
-                    $('#subCategory').html('<option value="">--選択してください--</option>');
-                    $('#smallCategory').html('<option value="">--選択してください--</option>');
-                }
-            });
+			$('#largeCategory').change(function () {
+				const largeCategoryId = $(this).val();
+				if (largeCategoryId) {
+					$.ajax({
+						url: `/subcategories/${largeCategoryId}`,
+						type: 'GET',
+						success: function (data) {
+							let subCategoryOptions = '<option value="">--選択してください--</option>';
+							data.forEach(function (subCategory) {
+								subCategoryOptions += `<option value="${subCategory.subcategoryId}">${subCategory.subcategoryName}</option>`;
+							});
+							$('#subCategory').html(subCategoryOptions);
+						}
+					});
+				} else {
+					$('#subCategory').html('<option value="">--選択してください--</option>');
+					$('#smallCategory').html('<option value="">--選択してください--</option>');
+				}
+			});
 
-            $('#subCategory').change(function () {
-                const subCategoryId = $(this).val();
-                if (subCategoryId) {
-                    $.ajax({
-                        url: `/smallcategories/${subCategoryId}`,
-                        type: 'GET',
-                        success: function (data) {
-                            let smallCategoryOptions = '<option value="">--選択してください--</option>';
-                            data.forEach(function (smallCategory) {
-                                smallCategoryOptions += `<option value="${smallCategory.smallCategoryId}">${smallCategory.smallCategoryName}</option>`;
-                            });
-                            $('#smallCategory').html(smallCategoryOptions);
-                        }
-                    });
-                } else {
-                    $('#smallCategory').html('<option value="">--選択してください--</option>');
-                }
-            });
-        });
-    </script>
+			$('#subCategory').change(function () {
+				const subCategoryId = $(this).val();
+				if (subCategoryId) {
+					$.ajax({
+						url: `/smallcategories/${subCategoryId}`,
+						type: 'GET',
+						success: function (data) {
+							let smallCategoryOptions = '<option value="">--選択してください--</option>';
+							data.forEach(function (smallCategory) {
+								smallCategoryOptions += `<option value="${smallCategory.smallCategoryId}">${smallCategory.smallCategoryName}</option>`;
+							});
+							$('#smallCategory').html(smallCategoryOptions);
+						}
+					});
+				} else {
+					$('#smallCategory').html('<option value="">--選択してください--</option>');
+				}
+			});
+		});
+	</script>
 </body>
+
 </html>

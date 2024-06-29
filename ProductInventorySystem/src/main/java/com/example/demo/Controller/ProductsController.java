@@ -49,7 +49,7 @@ public class ProductsController {
 			@RequestParam(required = false) Integer subCategoryId,
 			@RequestParam(required = false) Integer smallCategoryId,
 			@RequestParam(required = false) String search,
-			@RequestParam(defaultValue = "1") int page, //アノテーション設定　1ページあたり3種表示
+			@RequestParam(defaultValue = "1") int page, //アノテーション設定 1ページあたり3種表示
 			@RequestParam(defaultValue = "3") int size,
 			Model model) {
 		// カテゴリのリストを取得しモデルに追加
@@ -66,6 +66,7 @@ public class ProductsController {
 		return "products"; // productページにアクセス
 	}
 
+	    //商品詳細画面における情報取得
 	@GetMapping("/product/details/{productStoreId}")
 	public String getProductDetails(@PathVariable Integer productStoreId, Model model) {
 		ProductStore productStore = productStoreService.getProductStoreById(productStoreId);
@@ -79,17 +80,19 @@ public class ProductsController {
 
 		// SmallCategoryとLargeCategoryを取得
 		SmallCategory smallCategory = product.getSmallCategory();
-		LargeCategory largeCategory = null;
-		if (smallCategory != null) {
-			largeCategory = smallCategory.getLargeCategory();
-		}
+		Subcategory subcategory = smallCategory != null ? smallCategory.getSubcategory() : null; // Subcategoryを取得
+		LargeCategory largeCategory = subcategory != null ? subcategory.getLargeCategory() : null; // LargeCategoryを取得
 
 		String largeCategoryName = largeCategory != null ? largeCategory.getLargeCategoryName() : "Unknown";
+		String subcategoryName = subcategory != null ? subcategory.getSubcategoryName() : "Unknown"; // Subcategory名を設定
+		String smallCategoryName = smallCategory != null ? smallCategory.getSmallCategoryName() : "Unknown"; // SmallCategory名を設定
 
 		model.addAttribute("product", product);
 		model.addAttribute("manufacturerName", manufacturerName);
 		model.addAttribute("productStore", productStore);
 		model.addAttribute("largeCategoryName", largeCategoryName);
+		model.addAttribute("subcategoryName", subcategoryName); // Subcategory名をモデルに追加
+		model.addAttribute("smallCategoryName", smallCategoryName); // SmallCategory名をモデルに追加
 
 		return "product-details"; // product-detailsにアクセス
 	}
@@ -112,7 +115,7 @@ public class ProductsController {
 		}
 	}
 
-	//API JSON形式でデータを返すエンドポイントと定義 特定商品、StoreID　Storeごとの商品情報（店舗販売価格、在庫など）を取得
+	//API JSON形式でデータを返すエンドポイントと定義 特定商品、StoreID Storeごとの商品情報（店舗販売価格、在庫など）を取得
 	@RestController
 	public static class ProductRestController {
 

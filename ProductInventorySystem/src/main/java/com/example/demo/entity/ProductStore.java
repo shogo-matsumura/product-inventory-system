@@ -26,12 +26,12 @@ public class ProductStore {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    @JsonBackReference
+    @JsonBackReference //無限ループが生まれるため入れた（消すと無限ループする）
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
-    @JsonBackReference
+    @JsonBackReference  //無限ループが生まれるため入れた(消すと無限ループする）
     private Store store; 
 
     @Column(name = "selling_price")
@@ -49,7 +49,7 @@ public class ProductStore {
     @Column(name = "order_date")
     private Date orderDate;
 
-    // Getters and setters
+    // ゲッターセッター
     public Long getProductStoreId() {
         return productStoreId;
     }
