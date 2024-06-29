@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>メーカー管理</title>
+</head>
+<body>
+    <h1>メーカー管理</h1>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>メーカー名</th>
+                <th>作成日</th>
+                <th>更新日</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="manufacturer : ${manufacturers}">
+                <td th:text="${manufacturer.manufacturerId}"></td>
+                <td th:text="${manufacturer.manufacturerName}"></td>
+                <td th:text="${manufacturer.createdAt}"></td>
+                <td th:text="${manufacturer.updatedAt}"></td>
+                <td>
+                    <a th:href="@{/manufacturer/details/{id}(id=${manufacturer.manufacturerId})}">編集</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+        <a th:href="@{/manufacturer/new}">新規作成</a> 
+    <a th:href="@{/dashboard}">ダッシュボードに戻る</a>
+</body>
+</html>

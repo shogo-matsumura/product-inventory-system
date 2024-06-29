@@ -1,0 +1,24 @@
+<!-- admin-management.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>管理者管理</title>
+</head>
+<body>
+    <h1>管理者管理</h1>
+    <table>
+        <tr>
+            <th>名前</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="manager : ${managers}">
+            <td th:text="${manager.firstName} + ' ' + ${manager.lastName}"></td>
+            <td><a th:href="@{/admin-management/details/{id}(id=${manager.id})}">詳細</a></td>
+        </tr>
+    </table>
+    <div>
+        <a th:href="@{/admin-management/register}">新規登録</a>
+    </div>
+        <a th:href="@{/dashboard}">ダッシュボードへ戻る</a>
+</body>
+</html>

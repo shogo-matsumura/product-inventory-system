@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>新規管理者登録</title>
+</head>
+<body>
+    <h1>新規管理者登録</h1>
+    <form th:action="@{/admin-management/register}" th:object="${manager}" method="post">
+        <div>
+            <label>姓:</label>
+            <input type="text" th:field="*{lastName}" required />
+        </div>
+        <div>
+            <label>名:</label>
+            <input type="text" th:field="*{firstName}" required />
+        </div>
+        <div>
+            <label>メール:</label>
+            <input type="email" th:field="*{email}" required />
+        </div>
+        <div>
+            <label>電話番号:</label>
+            <input type="text" th:field="*{phoneNumber}" pattern="\d{10,11}" title="ハイフンなしで入力してください" required />
+        </div>
+        <div>
+            <label>パスワード:</label>
+            <input type="password" th:field="*{password}" required />
+        </div>
+        <div>
+            <label>店舗名:</label>
+            <select th:field="*{storeId}">
+                <option th:each="store : ${stores}" th:value="${store.storeId}" th:text="${store.storeName}"></option>
+            </select>
+        </div>
+        <div>
+            <label>役職名:</label>
+            <select th:field="*{positionId}">
+                <option th:each="position : ${positions}" th:value="${position.positionId}" th:text="${position.positionName}"></option>
+            </select>
+        </div>
+        <div>
+            <label>権限:</label>
+            <select th:field="*{permissionId}">
+                <option th:each="permission : ${permissions}" th:value="${permission.permissionId}" th:text="${permission.permissionName}"></option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">作成</button>
+            <a th:href="@{/admin-management}">キャンセル</a>
+        </div>
+    </form>
+</body>
+</html>

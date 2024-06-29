@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>商品発注管理</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>商品発注管理</h1>
+    <div th:each="store : ${stores}">
+        <h2>店舗名: <span th:text="${store.storeName}"></span></h2>
+        <p>住所: <span th:text="${store.address}"></span></p>
+        <h3>商品一覧</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>商品名</th>
+                    <th>販売価格</th>
+                    <th>在庫数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="productStore : ${store.productStores}">
+                    <td th:text="${productStore.product.productName}"></td>
+                    <td th:text="${productStore.sellingPrice} + ' 円'"></td>
+                    <td th:text="${productStore.stockQuantity} + ' 台'"></td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>商品発注履歴一覧</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>商品名</th>
+                    <th>管理者名</th>
+                    <th>発注数</th>
+                    <th>合計金額</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="orderHistory : ${store.orderHistories}">
+                    <td th:text="${orderHistory.product.productName}">商品名</td>
+                    <td th:text="${orderHistory.manager.lastName} + ' ' + ${orderHistory.manager.firstName}">管理者名</td>
+                    <td th:text="${orderHistory.orderQuantity} + ' 台'">発注数</td>
+                    <td th:text="${orderHistory.totalAmount} + ' 円'">合計金額</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <a th:href="@{/dashboard}">戻る</a>
+</body>
+</html>

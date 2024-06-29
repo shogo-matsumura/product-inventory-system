@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>商品詳細</title>
+</head>
+<body>
+    <h1>商品詳細</h1>
+    <div>
+        <label>商品名:</label>
+        <span th:text="${product.productName}"></span>
+    </div>
+    <div>
+        <label>商品画像:</label>
+        <img th:src="@{/images/{productImage}(productImage=${product.productImage})}" alt="Product Image">
+    </div>
+    <div>
+        <label>商品説明:</label>
+        <span th:text="${product.productDescription}"></span>
+    </div>
+    <div>
+        <label>メーカ名:</label>
+        <span th:text="${manufacturerName}"></span>
+    </div>
+    <div>
+        <label>メーカ希望小売価格:</label>
+        <span th:text="${product.msrp}"></span> 円
+    </div>
+    <div>
+        <label>仕入れ原価:</label>
+        <span th:text="${product.costPrice}"></span> 円
+    </div>
+    <div>
+        <label>大カテゴリ名:</label>
+        <span th:text="${largeCategoryName}"></span>
+    </div>
+    <div>
+        <label>中カテゴリ名:</label>
+        <span th:text="${subcategoryName}"></span>
+    </div>
+    <div>
+        <label>小カテゴリ名:</label>
+        <span th:text="${smallCategoryName}"></span>
+    </div>
+    <a th:href="@{/products}">戻る</a>
+</body>
+</html>
